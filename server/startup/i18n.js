@@ -51,6 +51,7 @@ export function loadTranslation(source) {
  * @return {Boolean} false if assets weren't loaded
  */
 export function loadTranslations(sources) {
+  return;
   sources.forEach(function (source) {
     loadTranslation(source);
   });
@@ -72,25 +73,25 @@ export function loadCoreTranslations() {
   if (directoryExists(i18nFolder)) {
     fs.readdir(i18nFolder, Meteor.bindEnvironment(function (err, files) {
       if (err) throw new Meteor.Error("No translations found for import.", err);
-      for (const file of files) {
-        if (~file.indexOf("json")) {
-          Logger.debug(`Importing Translations from ${file}`);
-          const json = fs.readFileSync(i18nFolder + file, "utf8");
-          const content = JSON.parse(json);
+      // for (const file of files) {
+      //   if (~file.indexOf("json")) {
+      //     Logger.debug(`Importing Translations from ${file}`);
+      //     const json = fs.readFileSync(i18nFolder + file, "utf8");
+      //     const content = JSON.parse(json);
 
-          Assets.update({
-            type: "i18n",
-            name: content[0].i18n,
-            ns: content[0].ns
-          }, {
-            $set: {
-              content: json
-            }
-          }, {
-            upsert: true
-          });
-        }
-      }
+      //     Assets.update({
+      //       type: "i18n",
+      //       name: content[0].i18n,
+      //       ns: content[0].ns
+      //     }, {
+      //       $set: {
+      //         content: json
+      //       }
+      //     }, {
+      //       upsert: true
+      //     });
+      //   }
+      // }
 
       // purposely broad results here
       // we will be processing assets

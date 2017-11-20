@@ -1,4 +1,6 @@
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import SimpleSchema from "simpl-schema";
+import { check } from "meteor/check";
+import { Tracker } from "meteor/tracker";
 import { TaxPackageConfig } from "/imports/plugins/core/taxes/lib/collections/schemas";
 import { registerSchema } from "@reactioncommerce/reaction-collections";
 
@@ -6,8 +8,9 @@ import { registerSchema } from "@reactioncommerce/reaction-collections";
 * TaxPackageConfig Schema
 */
 
-export const TaxCloudPackageConfig = new SimpleSchema([
-  TaxPackageConfig, {
+export const TaxCloudPackageConfig = new SimpleSchema({}, { check, tracker: Tracker })
+  .extend(TaxPackageConfig)
+  .extend({
     "settings.taxcloud": {
       type: Object,
       optional: true
@@ -37,7 +40,6 @@ export const TaxCloudPackageConfig = new SimpleSchema([
       defaultValue: "https://taxcloud.net/tic/?format=json",
       optional: true
     }
-  }
-]);
+  });
 
 registerSchema("TaxCloudPackageConfig", TaxCloudPackageConfig);

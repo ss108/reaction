@@ -1,4 +1,6 @@
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import SimpleSchema from "simpl-schema";
+import { check } from "meteor/check";
+import { Tracker } from "meteor/tracker";
 import { DiscountsPackageConfig } from "/imports/plugins/core/discounts/lib/collections/schemas";
 import { registerSchema } from "@reactioncommerce/reaction-collections";
 
@@ -8,8 +10,9 @@ import { registerSchema } from "@reactioncommerce/reaction-collections";
 * @desc schema that extends discount schema
 * with properties for discount rates.
 */
-export const DiscountCodesPackageConfig = new SimpleSchema([
-  DiscountsPackageConfig, {
+export const DiscountCodesPackageConfig = new SimpleSchema({}, { check, tracker: Tracker })
+  .extend(DiscountsPackageConfig)
+  .extend({
     "settings.codes": {
       type: Object,
       optional: true
@@ -19,7 +22,6 @@ export const DiscountCodesPackageConfig = new SimpleSchema([
       optional: true,
       defaultValue: false
     }
-  }
-]);
+  });
 
 registerSchema("DiscountCodesPackageConfig", DiscountCodesPackageConfig);

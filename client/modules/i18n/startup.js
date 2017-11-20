@@ -109,16 +109,13 @@ Meteor.startup(() => {
             fallbackLng: shop ? shop.language : null, // Shop language
             resources: resources
           }, () => {
-            // someday this should work
-            // see: https://github.com/aldeed/meteor-simple-schema/issues/494
-
             // Loop through registered Schemas
             const Schemas = getSchemas();
             for (const schema in Schemas) {
               if ({}.hasOwnProperty.call(Schemas, schema)) {
                 const ss = Schemas[schema];
                 ss.labels(getLabelsFor(ss, schema));
-                ss.messages(getMessagesFor(ss, schema));
+                // ss.messages(getMessagesFor(ss, schema));
               }
             }
 

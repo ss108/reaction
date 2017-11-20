@@ -2,7 +2,7 @@ import i18next from "i18next";
 import moment from "moment";
 import { Meteor } from "meteor/meteor";
 import { Tracker } from "meteor/tracker";
-import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import SimpleSchema from "simpl-schema";
 import { Reaction } from "/client/api";
 
 /**
@@ -42,18 +42,16 @@ export function getBrowserLanguage() {
 export function getLabelsFor(schema, name) {
   const labels = {};
   // loop through all the rendered form fields and generate i18n keys
-  for (const fieldName of schema._schemaKeys) {
+  Object.keys(schema.mergedSchema()).forEach((fieldName) => {
     const i18nKey = name.charAt(0).toLowerCase() + name.slice(1) + "." +
       fieldName
         .split(".$").join("");
     // translate autoform label
     const t = i18next.t(i18nKey);
-    if (new RegExp("string").test(t) !== true && t !== i18nKey) {
-      if (t) {
-        labels[fieldName] = t;
-      }
+    if (t && new RegExp("string").test(t) !== true && t !== i18nKey) {
+      labels[fieldName] = t;
     }
-  }
+  });
   return labels;
 }
 
@@ -103,7 +101,7 @@ Meteor.startup(() => {
     // setting local and active packageNamespaces
     // packageNamespaces are used to determine i18n namespace
     if (Reaction.Subscriptions.PrimaryShop.ready() && merchantShopsReadyOrSkipped) {
-      // use i18n detected language to getLocale info and set it clie nt side
+      // use i18n detected language to getLocale info and set it client side
       Meteor.call("shop/getLocale", (error, result) => {
         if (result) {
           const locale = result;

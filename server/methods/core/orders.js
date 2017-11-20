@@ -1005,7 +1005,7 @@ export const methods = {
    */
   "orders/refunds/create": function (orderId, paymentMethod, amount, sendEmail = true) {
     check(orderId, String);
-    check(paymentMethod, Reaction.Schemas.PaymentMethod);
+    Reaction.Schemas.PaymentMethod.validate(paymentMethod);
     check(amount, Number);
     check(sendEmail, Match.Optional(Boolean));
 
@@ -1087,7 +1087,7 @@ export const methods = {
    */
   "orders/refunds/refundItems": function (orderId, paymentMethod, refundItemsInfo) {
     check(orderId, String);
-    check(paymentMethod, Reaction.Schemas.PaymentMethod);
+    Reaction.Schemas.PaymentMethod.validate(paymentMethod);
     check(refundItemsInfo, Object);
 
     // REVIEW: For marketplace implementations, who can refund? Just the marketplace?

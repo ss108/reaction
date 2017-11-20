@@ -64,7 +64,7 @@ class Form extends Component {
   }
 
   get schema() {
-    return this.props.schema._schema;
+    return this.props.schema.mergedSchema();
   }
 
   valueForField(fieldName) {

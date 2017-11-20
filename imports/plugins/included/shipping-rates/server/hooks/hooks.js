@@ -17,7 +17,7 @@ import { Cart as CartSchema } from "/lib/collections/schemas";
  * shipping rates.
  */
 function getShippingRates(previousQueryResults, cart) {
-  check(cart, CartSchema);
+  CartSchema.validate(cart);
   const [rates, retrialTargets] = previousQueryResults;
   const shops = [];
   const products = cart.items;

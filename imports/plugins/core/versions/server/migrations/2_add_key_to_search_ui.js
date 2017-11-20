@@ -15,7 +15,7 @@ Migrations.add({
           }]
         }
       },
-      { multi: true }
+      { bypassCollection2: true, multi: true }
     );
   }
 });
